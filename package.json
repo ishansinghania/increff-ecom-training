@@ -21,8 +21,7 @@
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4",
-    "lodash": "^4.17.21",
-    "bootstrap": "4.4.1"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.1.0",

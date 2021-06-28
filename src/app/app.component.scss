@@ -1,0 +1,28 @@
+nav {
+    position: fixed !important;
+    top: 0;
+    z-index: 10000;
+    background-color: white;
+    width: 100%
+}
+
+.navbar-brand img {
+    height: 32px;
+}
+
+.footer {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #fff;
+    box-shadow: 0 -0.125rem 0.25rem rgba(0,0,0,.075);
+}
+
+.footer .container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
