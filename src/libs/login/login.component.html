@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div
+      class="login-container border rounded shadow py-3 col-11 col-sm-8 col-md-6 col-lg-5 col-xl-3 position-absolute"
+    >
+      <img
+        class="img-fluid img-thumbnail border-0 mx-auto d-block mb-4"
+        src="/assets/logo.png"
+        alt="Logo"
+      />
+      <h3 class="text-center mb-5">Sign In</h3>
+      <form [formGroup]="form">
+        <div class="form-group">
+          <label for="email" class="font-weight-bold">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            id="email"
+            placeholder="example@increff.com"
+            required
+            formControlName="email"
+            [ngClass]="{'input-error': isControlValid(email)}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password" class="font-weight-bold">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+            required
+            formControlName="password"
+            [ngClass]="{'input-error': isControlValid(password)}"
+          />
+        </div>
+        <div
+          class="text-danger bg-light p-1 text-center"
+          id="error-message"
+          *ngIf="serverError"
+        >
+          {{ serverError }}
+        </div>
+        <button
+          type="submit"
+          [disabled]="submitting"
+          (click)="submitForm()"
+          class="btn btn-outline-primary mx-auto d-block mt-4"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

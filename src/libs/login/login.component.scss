@@ -1,0 +1,15 @@
+button[disabled] {
+  background-color: rgba(143, 155, 179, 0.24);
+  border-color: rgba(143, 155, 179, 0.24);
+  color: #888;
+}
+
+.login-container {
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+
+.input-error {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem #ffd3d0;
+}
