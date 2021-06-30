@@ -20,12 +20,16 @@ export class ProductComponent {
     private _route: ActivatedRoute
   ) {}
 
-  addToCart() {
+  stopPropagation(event: Event) {
+    event.stopPropagation();
+  }
+
+  addToCart(event: Event) {
+    this.stopPropagation(event);
     this._cartService.addToCart(this.product.id, this.quantity);
   }
 
-  navigateToDetail(event: Event) {
-    event.stopPropagation();
+  navigateToDetail() {
     this._router.navigate([this.product.id], {
       relativeTo: this._route,
     });

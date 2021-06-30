@@ -2,7 +2,7 @@
   class="product-detail cursor-pointer"
   *ngIf="product"
   (mouseleave)="quantity = 1"
-  (click)="navigateToDetail($event)"
+  (click)="navigateToDetail()"
 >
   <div class="mx-auto">
     <img
@@ -12,7 +12,10 @@
     />
   </div>
   <div class="my-1 px-1 position-relative">
-    <div class="cart-section pt-2 pb-1 px-1 bg-white w-100">
+    <div
+      class="cart-section pt-2 pb-1 px-1 bg-white w-100"
+      (click)="stopPropagation($event)"
+    >
       <input
         class="small py-1 px-2"
         [(ngModel)]="quantity"
@@ -20,7 +23,10 @@
         min="1"
         type="number"
       />
-      <button class="btn btn-outline-primary btn-sm" (click)="addToCart()">
+      <button
+        class="btn btn-outline-primary btn-sm"
+        (click)="addToCart($event)"
+      >
         + Add
       </button>
     </div>
