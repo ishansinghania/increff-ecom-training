@@ -1,0 +1,26 @@
+.product-detail {
+  .cart-section {
+    display: none;
+  }
+
+  &:hover .cart-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    top: -2.75rem;
+    right: 0;
+  }
+}
+
+.cart-section input {
+  width: 50%;
+  height: 1.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.cart-section button {
+  line-height: 1.15rem;
+}
