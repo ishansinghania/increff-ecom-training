@@ -1,7 +1,4 @@
-<div
-  class="product-detail"
-  *ngIf="product"
->
+<div class="product-detail" *ngIf="product" (mouseleave)="quantity = 1">
   <div class="mx-auto">
     <img
       class="img-fluid rounded img-thumbnail border-0 pt-2"
@@ -11,8 +8,16 @@
   </div>
   <div class="my-1 px-1 position-relative">
     <div class="cart-section pt-2 pb-1 px-1 bg-white w-100">
-      <input class="small py-1 px-2" value="1" min="1" type="number" />
-      <button class="btn btn-outline-primary btn-sm">+ Add</button>
+      <input
+        class="small py-1 px-2"
+        [(ngModel)]="quantity"
+        value="1"
+        min="1"
+        type="number"
+      />
+      <button class="btn btn-outline-primary btn-sm" (click)="addToCart()">
+        + Add
+      </button>
     </div>
     <div class="font-weight-bold product-brand">{{ product.brandName }}</div>
     <small class="text-secondary product-name">{{product.name}}</small>

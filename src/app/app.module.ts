@@ -5,8 +5,9 @@ import { BrowserModule } from "@angular/platform-browser";
 
 import { LoginModule } from "@libs/login/login.module";
 import { MiscellaneousModule } from "@libs/miscellaneous/miscellaneous.module";
-import { AppRoutingModule } from "./app-routing.module";
+import { ReusableModule } from "@libs/reusable/reusable.module";
 
+import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
 @NgModule({
@@ -15,9 +16,11 @@ import { AppComponent } from "./app.component";
     CommonModule,
     BrowserModule,
     HttpClientModule,
+
     AppRoutingModule,
-    MiscellaneousModule,
+    ReusableModule,
     LoginModule,
+    MiscellaneousModule,
   ],
   bootstrap: [AppComponent],
 })

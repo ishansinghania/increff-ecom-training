@@ -8,10 +8,10 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { Observable, of } from "rxjs";
-import { finalize, tap } from "rxjs/operators";
+import { Observable } from "rxjs";
+import { finalize } from "rxjs/operators";
 
-import { User } from "../../model/user";
+import { User } from "../../model";
 import { LoginManager } from "./login.service";
 
 @Component({

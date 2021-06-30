@@ -1,12 +1,10 @@
 import { Injectable } from "@angular/core";
-import { Observable, of, throwError } from "rxjs";
-import { catchError, map, tap } from "rxjs/operators";
+import { Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 
-import { User } from "../../model/user";
-import { ApiService } from "../miscellaneous/api-service.component";
-import { StorageService } from "../miscellaneous/storage-service.component";
-
-const USER_KEY: string = "user";
+import { User, USER_KEY } from "../../model";
+import { ApiService, StorageService } from "@libs/reusable";
 
 @Injectable()
 export class LoginManager {
@@ -15,7 +13,8 @@ export class LoginManager {
 
   constructor(
     private _apiService: ApiService,
-    private _storageService: StorageService
+    private _storageService: StorageService,
+    private _router: Router
   ) {}
 
   get userName() {
@@ -23,16 +22,19 @@ export class LoginManager {
   }
 
   get user(): User {
-      // Will fetch the user from the local storage for the first time otherwise will return the in memory stored user.
-    if (!this._user) {
-        this._user = this._storageService.getLocal(USER_KEY);
-    }
+    // Will fetch the user from the local storage for the first time otherwise will return the in memory stored user.
+    // if (!this._user) {}
+    this._user = this._storageService.getLocal(USER_KEY);
     return this._user;
   }
 
   private _setUser(user: User) {
     this._user = { ...user } as User;
     this._storageService.saveLocal(USER_KEY, user);
+  }
+
+  redirectToLogin() {
+    this._router.navigateByUrl("/login");
   }
 
   isAuthenticated() {

@@ -1,14 +1,12 @@
 import { NgModule } from "@angular/core";
-
 import { CommonModule } from "@angular/common";
-import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 
-import { StorageService } from "../miscellaneous/storage-service.component";
-import { ApiService } from "../miscellaneous/api-service.component";
+import { ReusableModule } from "@libs/reusable/reusable.module";
+import { CartService } from "./cart-service.component";
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule, RouterModule],
-  providers: [StorageService, ApiService],
+  imports: [CommonModule, RouterModule, ReusableModule],
+  providers: [CartService],
 })
 export class MiscellaneousModule {}

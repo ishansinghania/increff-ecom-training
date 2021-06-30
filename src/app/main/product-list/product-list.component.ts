@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { takeUntil, takeWhile } from "rxjs/operators";
 
-import { ApiService } from "@libs/miscellaneous/api-service.component";
-import { Product } from "../../../model/product";
+import { ApiService } from "@libs/reusable/api-service.component";
+import { Product } from "../../../model";
 
 @Component({
   selector: "product-list",

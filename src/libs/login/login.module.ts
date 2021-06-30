@@ -9,7 +9,7 @@ import { LoginComponent } from "./login.component";
 import { LoginManager } from "./login.service";
 import { LoginGuard } from "./login.guard";
 import { AuthGuard } from "./auth.guard";
-import { MiscellaneousModule } from "../miscellaneous/miscellaneous.module";
+import { ReusableModule } from "@libs/reusable/reusable.module";
 
 @NgModule({
   imports: [
@@ -18,7 +18,7 @@ import { MiscellaneousModule } from "../miscellaneous/miscellaneous.module";
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    MiscellaneousModule
+    ReusableModule
   ],
   declarations: [LoginComponent],
   providers: [LoginManager, LoginGuard, AuthGuard],

@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate {
     // extra check if user try to load login
     if (path && path !== "/login") this._loginManager.redirectUrl = path;
 
-    this._router.navigateByUrl("/login");
+    this._loginManager.redirectToLogin();
     return of(false);
   }
 }

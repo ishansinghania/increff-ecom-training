@@ -13,4 +13,5 @@ export interface Product {
   description: string;
   material: string;
   care: string;
+  quantity: number;
 }

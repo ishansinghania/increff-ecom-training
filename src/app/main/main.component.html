@@ -24,7 +24,9 @@
           data-placement="bottom"
           title="Checkout"
         ></i>
-        <span class="badge badge-pill badge-secondary cart-quantity">0</span>
+        <span class="badge badge-pill badge-secondary cart-quantity"
+          >{{ quantity }}</span
+        >
       </a>
     </div>
     <div class="nav-item dropdown px-2">
@@ -50,7 +52,7 @@
   </div>
 </nav>
 <div class="main-container">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>
 <div class="footer">
   <div class="container-fluid">
