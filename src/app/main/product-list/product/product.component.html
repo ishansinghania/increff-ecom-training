@@ -1,4 +1,9 @@
-<div class="product-detail" *ngIf="product" (mouseleave)="quantity = 1">
+<div
+  class="product-detail cursor-pointer"
+  *ngIf="product"
+  (mouseleave)="quantity = 1"
+  (click)="navigateToDetail($event)"
+>
   <div class="mx-auto">
     <img
       class="img-fluid rounded img-thumbnail border-0 pt-2"

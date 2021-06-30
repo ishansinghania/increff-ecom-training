@@ -20,5 +20,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
       .pipe(takeWhile(() => this._alive))
       .subscribe((response) => (this.productList = response.body));
   }
-  ngOnDestroy() {}
+
+  ngOnDestroy() {
+    this._alive = false;
+  }
 }
