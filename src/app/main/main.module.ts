@@ -1,24 +1,20 @@
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
 
 import { LoginModule } from "@libs/login/login.module";
 import { MiscellaneousModule } from "@libs/miscellaneous/miscellaneous.module";
-import { AppRoutingModule } from "./app-routing.module";
 
-import { AppComponent } from "./app.component";
+import { MainRoutingModule } from "./main-routing.module";
+import { MainComponent } from "./main.component";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [MainComponent],
   imports: [
     CommonModule,
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
+    MainRoutingModule,
     MiscellaneousModule,
-    LoginModule,
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [MainComponent],
 })
-export class AppModule {}
+export class MainModule {}
