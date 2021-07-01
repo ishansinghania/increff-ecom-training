@@ -1,4 +1,4 @@
-import * as Papa from 'papaparse'
+import * as Papa from "papaparse";
 
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { finalize, takeWhile, tap } from "rxjs/operators";
@@ -43,8 +43,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   constructor(
     private _apiService: ApiService,
-    private _cartService: CartService,
-    // private _papa: Papa
+    private _cartService: CartService
   ) {}
 
   getQuantity(productId: number) {
@@ -102,20 +101,22 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   downloadOrder() {
     const fields = ["id", "brandName", "name", "clientSkuId", "size", "mrp"];
 
-    const products = this.productList.map((product: any) => {
-      const temp: { [key: string]: any } = {};
-      fields.forEach((field) => {
-        temp[field] = product[field];
-      });
+    const products = this.productList
+      .map((product: any) => {
+        const temp: { [key: string]: any } = {};
+        fields.forEach((field) => {
+          temp[field] = product[field];
+        });
 
-      const item = this.cartItems.find(item => item.id = product.id);
-      temp['quantity'] = item?.quantity;
-      temp['subtotal'] = temp?.quantity * product?.mrp;
-      temp['gst'] = temp?.subtotal * 0.14;
-      temp['total'] = temp?.subtotal + temp?.gst;
+        const item = this.cartItems.find((item) => (item.id = product.id));
+        temp["quantity"] = item?.quantity;
+        temp["subtotal"] = temp?.quantity * product?.mrp;
+        temp["gst"] = (temp?.subtotal * 0.14).toFixed(2);
+        temp["total"] = temp?.subtotal + temp?.gst;
 
-      return temp;
-    }).sort((a, b) => a.id - b.id);
+        return temp;
+      })
+      .sort((a, b) => a.id - b.id);
 
     const csv = Papa.unparse(products);
 

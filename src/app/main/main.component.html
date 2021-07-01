@@ -4,7 +4,10 @@
       <img src="/assets/brand-logo.png" />
     </a>
     <div class="nav-item" *ngIf="canShow('/upload')">
-      <a class="nav-link text-dark position-relative" [routerLink]="['/']">
+      <a
+        class="nav-link text-dark position-relative"
+        [routerLink]="['/upload']"
+      >
         <i
           class="fas fa-file-upload fa-lg"
           data-tooltip="tooltip"
@@ -42,9 +45,7 @@
       ></i>
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <label class="w-100 py-1 px-4 text-nowrap">{{userName}}</label>
-        <a class="dropdown-item font-weight-bold" (click)="logout()"
-          >Logout</a
-        >
+        <a class="dropdown-item font-weight-bold" (click)="logout()">Logout</a>
       </div>
     </div>
   </div>

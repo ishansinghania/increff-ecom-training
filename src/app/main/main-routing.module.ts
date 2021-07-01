@@ -5,6 +5,7 @@ import { MainComponent } from "./main.component";
 import { ProductListComponent } from "./product-list/product-list.component";
 import { ProductDetailComponent } from "./product-detail/product-detail.component";
 import { CheckoutComponent } from "./checkout/checkout.component";
+import { UploadComponent } from "./upload/upload.component";
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
       {
         path: "checkout",
         component: CheckoutComponent,
+      },
+      {
+        path: "upload",
+        component: UploadComponent,
       },
       {
         path: ":id",
@@ -38,4 +43,5 @@ export const ROUTING_COMPONENTS = [
   ProductListComponent,
   ProductDetailComponent,
   CheckoutComponent,
+  UploadComponent,
 ];
