@@ -27,6 +27,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   addToCart() {
     this._cartService.addToCart(this.productId, this.quantity);
+    this.quantity = 1;
   }
 
   ngOnInit() {

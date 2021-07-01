@@ -91,11 +91,13 @@ export class CartService {
         return false;
       }
 
-      const cartItems = this.getCartItems();
-      cartItems.filter((item) => item.id !== productId);
+      let cartItems = this.getCartItems();
+      cartItems = cartItems.filter((item) => item.id !== productId);
 
       this.setCartItems(cartItems);
       this.updateQuantity();
+
+      window.alert('Product deleted successfully!');
       return true;
   }
 }

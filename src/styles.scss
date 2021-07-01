@@ -18,3 +18,11 @@ hr {
 p {
     color: #343a40;
 }
+
+.dropdown-menu.show {
+    left: -8rem;
+}
+
+.fas.dropdown-toggle::after {
+    display: none;
+}

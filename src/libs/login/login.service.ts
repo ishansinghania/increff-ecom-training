@@ -67,5 +67,6 @@ export class LoginManager {
   logout() {
     this._storageService.clearLocal(USER_KEY);
     this.resetUser();
+    this.redirectToLogin();
   }
 }
