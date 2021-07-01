@@ -1,0 +1,96 @@
+<div class="container" *ngIf="isProductsFetched">
+  <div class="row">
+    <div class="col-12 col-lg-7">
+      <h4 class="font-weight-bold m-2">Orders</h4>
+      <div class="border rounded shadow-sm" *ngIf="productList.length">
+        <div
+          class="row m-0 p-2 border-bottom product"
+          *ngFor="let product of productList"
+        >
+          <img
+            class="img-fluid rounded img-thumbnail border-0 checkout-image"
+            [src]="product.image"
+            width="100px"
+            alt="Image not Available"
+          />
+          <div
+            class="col py-2 d-flex justify-content-between mr-auto flex-wrap position-relative"
+          >
+            <div>
+              <h5 class="font-weight-bold product-brand">
+                {{product.brandName}}
+              </h5>
+              <div class="text-secondary product-name">{{product.name}}</div>
+              <div>
+                <span class="text-secondary">Size:</span>&nbsp;
+                <span class="font-weight-bold product-size"
+                  >{{product.size}}</span
+                >
+              </div>
+            </div>
+            <div class="justify-items-end">
+              <div
+                class="d-flex align-items-center justify-content-sm-end font-weight-bold mb-2"
+              >
+                <i class="fas fa-rupee-sign fa-xs pr-1"></i>
+                <span class="product-mrp">{{product.mrp}}</span>
+              </div>
+              <div>
+                <span class="text-secondary">Quantity:</span>&nbsp;
+                <span class="product-quantity"
+                  >{{ getQuantity(product.id) }}</span
+                >
+              </div>
+            </div>
+            <i
+              class="fas fa-trash-alt p-1 cursor-pointer"
+              (click)="deleteProduct(product.id)"
+            ></i>
+          </div>
+        </div>
+      </div>
+      <h5 class="m-2" *ngIf="!productList?.length">
+        Add more products to place an order
+      </h5>
+    </div>
+    <div class="col-12 col-lg-5" *ngIf="productList?.length">
+      <h4 class="font-weight-bold m-2">Payments</h4>
+      <div class="border shadow-sm rounded p-2">
+        <h6 class="font-weight-bold mt-2">
+          Total Items (<span>{{productList?.length}}</span>)
+        </h6>
+        <div class="d-flex align-items-center justify-content-between">
+          <span>Subtotal</span>
+          <span>
+            <i class="fas fa-rupee-sign fa-xs text-dark"></i>
+            {{paymentInfo?.subtotal}}
+          </span>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <span>GST</span>
+          <span>
+            <i class="fas fa-rupee-sign fa-xs text-dark"></i>
+            {{paymentInfo?.gst}}
+          </span>
+        </div>
+        <hr />
+        <h5
+          class="d-flex align-items-center justify-content-between font-weight-bold"
+        >
+          <span>Total</span>
+          <span>
+            <i class="fas fa-rupee-sign fa-xs"></i>
+            {{paymentInfo?.total}}
+          </span>
+        </h5>
+      </div>
+      <button
+        type="button"
+        class="btn btn-primary btn-block mt-3"
+        (click)="downloadOrder()"
+      >
+        Place Order
+      </button>
+    </div>
+  </div>
+</div>

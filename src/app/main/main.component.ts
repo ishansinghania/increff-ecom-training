@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { Location } from "@angular/common";
+
 import { CartService } from "@libs/miscellaneous";
 
 @Component({
@@ -8,11 +10,15 @@ import { CartService } from "@libs/miscellaneous";
 })
 export class MainComponent implements OnInit {
   quantity: number;
-  constructor(private _cartService: CartService) {}
+  constructor(private _cartService: CartService, private _location: Location) {}
+
+  canShow(path: string) {
+    return this._location.path() !== path;
+  }
 
   ngOnInit() {
     this._cartService
-      .getQuantity()
+      .getQuantitySubscription()
       .subscribe((cartQuantity: number) => (this.quantity = cartQuantity));
   }
 }

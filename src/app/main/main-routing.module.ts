@@ -4,6 +4,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { MainComponent } from "./main.component";
 import { ProductListComponent } from "./product-list/product-list.component";
 import { ProductDetailComponent } from "./product-detail/product-detail.component";
+import { CheckoutComponent } from "./checkout/checkout.component";
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
       {
         path: "",
         component: ProductListComponent,
+      },
+      {
+        path: "checkout",
+        component: CheckoutComponent,
       },
       {
         path: ":id",
@@ -32,4 +37,5 @@ export class MainRoutingModule {}
 export const ROUTING_COMPONENTS = [
   ProductListComponent,
   ProductDetailComponent,
+  CheckoutComponent,
 ];

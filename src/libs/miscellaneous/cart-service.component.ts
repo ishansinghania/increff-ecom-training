@@ -7,24 +7,28 @@ import { Product, CART_KEY } from "../../model";
 
 @Injectable()
 export class CartService {
-  private quantity = new BehaviorSubject<number>(this.updateQuantity());
+  private quantity = new BehaviorSubject<number>(this.getQuantity());
 
   constructor(
     private _storageService: StorageService,
     private _loginService: LoginManager
   ) {}
 
-  getQuantity(): Observable<number> {
+  getQuantitySubscription(): Observable<number> {
     return this.quantity.asObservable();
   }
 
-  updateQuantity(): number {
+  getQuantity(): number {
     const cartItemMap = this.getCartItems();
     const totalQuantity = cartItemMap.reduce(
       (accr: number, curr: Product) => (accr += curr.quantity),
       0
     );
     return totalQuantity;
+  }
+
+  updateQuantity() {
+    this.quantity.next(this.getQuantity());
   }
 
   getLoggedInUserCartMap() {
@@ -64,7 +68,7 @@ export class CartService {
         cartItems[index].quantity += quantity;
 
         this.setCartItems(cartItems);
-        this.quantity.next(this.updateQuantity());
+        this.updateQuantity();
         window.alert("Product added successfully");
         return;
       }
@@ -76,7 +80,22 @@ export class CartService {
     } as Product);
 
     this.setCartItems(cartItems);
-    this.quantity.next(this.updateQuantity());
+    this.updateQuantity();
     window.alert("Product added successfully");
+  }
+
+  removeCartItem(productId: number) {
+    if (!this._loginService.isAuthenticated()) {
+        window.alert("Not logged in! Redirecting to login!");
+        setTimeout(this._loginService.redirectToLogin, 1500);
+        return false;
+      }
+
+      const cartItems = this.getCartItems();
+      cartItems.filter((item) => item.id !== productId);
+
+      this.setCartItems(cartItems);
+      this.updateQuantity();
+      return true;
   }
 }

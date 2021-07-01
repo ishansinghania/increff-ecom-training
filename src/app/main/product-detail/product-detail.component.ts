@@ -26,7 +26,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   addToCart() {
-      this._cartService.addToCart(this.productId, this.quantity);
+    this._cartService.addToCart(this.productId, this.quantity);
   }
 
   ngOnInit() {
@@ -49,7 +49,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
           if (index >= 0) this.product = products[index];
         }),
-        finalize(() => this.isProductFetched = true),
+        finalize(() => (this.isProductFetched = true)),
         takeWhile(() => this._alive)
       )
       .subscribe();
