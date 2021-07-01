@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "~12.1.0",
     "@angular/router": "~12.1.0",
     "lodash": "^4.17.21",
+    "papaparse": "^5.3.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
@@ -31,6 +32,7 @@
     "@types/jquery": "^3.5.1",
     "@types/lodash": "4.14.120",
     "@types/node": "^12.11.1",
+    "@types/papaparse": "^5.2.5",
     "jasmine-core": "~3.7.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",

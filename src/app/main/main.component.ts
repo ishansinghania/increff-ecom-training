@@ -1,5 +1,5 @@
 import * as $ from "jquery";
-import { AfterViewInit, Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Location } from "@angular/common";
 
 import { CartService } from "@libs/miscellaneous";
@@ -15,7 +15,7 @@ export class MainComponent implements OnInit, OnDestroy {
   userName: string;
 
   date: string;
-  dateIntervalId: number;
+  dateIntervalId: any;
 
   constructor(
     private _cartService: CartService,

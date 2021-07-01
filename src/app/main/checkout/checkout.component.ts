@@ -1,4 +1,4 @@
-// import * as papa from 'papaparse';
+import * as Papa from 'papaparse'
 
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { finalize, takeWhile, tap } from "rxjs/operators";
@@ -43,7 +43,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   constructor(
     private _apiService: ApiService,
-    private _cartService: CartService
+    private _cartService: CartService,
+    // private _papa: Papa
   ) {}
 
   getQuantity(productId: number) {
@@ -103,28 +104,38 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
     const products = this.productList.map((product: any) => {
       const temp: { [key: string]: any } = {};
-      for (let field of fields) temp[field] = product[field];
-    });
+      fields.forEach((field) => {
+        temp[field] = product[field];
+      });
 
-    //   const csv = Papa.unparse(products);
+      const item = this.cartItems.find(item => item.id = product.id);
+      temp['quantity'] = item?.quantity;
+      temp['subtotal'] = temp?.quantity * product?.mrp;
+      temp['gst'] = temp?.subtotal * 0.14;
+      temp['total'] = temp?.subtotal + temp?.gst;
+
+      return temp;
+    }).sort((a, b) => a.id - b.id);
+
+    const csv = Papa.unparse(products);
 
     // converting to a blob file
 
-    // const csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    // let csvURL = null;
-    // if (navigator.msSaveBlob) {
-    //     csvURL = navigator.msSaveBlob(csvData, 'order.csv');
-    // } else {
-    //     csvURL = window.URL.createObjectURL(csvData);
-    // }
+    const csvData = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    let csvURL = null;
+    if (navigator.msSaveBlob) {
+      csvURL = navigator.msSaveBlob(csvData, "order.csv");
+    } else {
+      csvURL = window.URL.createObjectURL(csvData);
+    }
 
-    // // creating a temporary element to mock a click and download the file.
-    // const tempLink = document.createElement('a');
-    // tempLink.href = csvURL as string;
-    // tempLink.setAttribute('download', 'order.csv');
-    // tempLink.click();
+    // creating a temporary element to mock a click and download the file.
+    const tempLink = document.createElement("a");
+    tempLink.href = csvURL as string;
+    tempLink.setAttribute("download", "order.csv");
+    tempLink.click();
 
-    // window.alert('Order placed successfully');
+    window.alert("Order placed successfully");
   }
 
   ngOnInit() {
