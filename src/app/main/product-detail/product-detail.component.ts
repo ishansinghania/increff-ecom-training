@@ -35,7 +35,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
     if (!this.productId) {
       window.alert("Enter a valid product id. Redirecting to list!");
-      setTimeout(() => this._router.navigateByUrl("/"), 1500);
+      this._router.navigateByUrl("/");
       return;
     }
 

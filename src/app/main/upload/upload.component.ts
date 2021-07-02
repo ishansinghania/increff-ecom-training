@@ -1,8 +1,9 @@
 import * as Papa from "papaparse";
 import { Component, ElementRef, ViewChild } from "@angular/core";
 import { ApiService } from "@libs/reusable";
+import { LoginManager } from "@libs/login";
 
-interface UploadProduct {
+interface Upload {
   id: number;
   brandName: string;
   name: string;
@@ -19,22 +20,24 @@ interface UploadProduct {
   templateUrl: "./upload.component.html",
 })
 export class UploadComponent {
-  products: UploadProduct[];
+  products: Upload[];
   fields: [] = [];
 
   @ViewChild("fileUpload") fileUpload: ElementRef;
 
-  file: File | null = null;
-
-  constructor(private _apiService: ApiService) {}
+  constructor(
+    private _apiService: ApiService,
+    private _loginService: LoginManager
+  ) {}
 
   handleFileInput(event: any) {
-    this.file = event.target.files[0];
+    if (!this._loginService.checkSession()) return;
+    const file: File = event.target.files[0];
 
-    if (this.file) {
+    if (file) {
       this._apiService.showLoader();
 
-      Papa.parse(this.file, {
+      Papa.parse(file, {
         complete: (results, file) => {
           const data = results.data as [];
           this.fields = results.data[0] as [];

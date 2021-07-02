@@ -50,11 +50,7 @@ export class CartService {
   }
 
   addToCart(id: number, quantity: number) {
-    if (!this._loginService.isAuthenticated()) {
-      window.alert("Not logged in! Redirecting to login!");
-      setTimeout(this._loginService.redirectToLogin, 1500);
-      return;
-    }
+      if(!this._loginService.checkSession()) return;
 
     if (quantity < 1) {
       window.alert("Quantity should be atleast one!");
@@ -85,11 +81,7 @@ export class CartService {
   }
 
   removeCartItem(productId: number) {
-    if (!this._loginService.isAuthenticated()) {
-        window.alert("Not logged in! Redirecting to login!");
-        setTimeout(this._loginService.redirectToLogin, 1500);
-        return false;
-      }
+    if(!this._loginService.checkSession()) return;
 
       let cartItems = this.getCartItems();
       cartItems = cartItems.filter((item) => item.id !== productId);

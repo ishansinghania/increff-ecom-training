@@ -5,6 +5,7 @@ import { finalize, takeWhile, tap } from "rxjs/operators";
 
 import { ApiService } from "@libs/reusable";
 import { CartService } from "@libs/miscellaneous";
+import { LoginManager } from "@libs/login";
 import { Product } from "../../../model";
 
 @Component({
@@ -43,7 +44,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   constructor(
     private _apiService: ApiService,
-    private _cartService: CartService
+    private _cartService: CartService,
+    private _loginService: LoginManager,
   ) {}
 
   getQuantity(productId: number) {
@@ -99,6 +101,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   downloadOrder() {
+    if(!this._loginService.checkSession()) return;
     const fields = ["id", "brandName", "name", "clientSkuId", "size", "mrp"];
 
     const products = this.productList

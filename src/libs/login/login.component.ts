@@ -31,11 +31,19 @@ export class LoginComponent implements OnInit {
     private _formBuilder: FormBuilder
   ) {}
 
-  get email() { return this.form.get('email'); }
-  get password() { return this.form.get('password'); }
+  get email() {
+    return this.form.get("email");
+  }
+  get password() {
+    return this.form.get("password");
+  }
 
   isControlValid(control: AbstractControl | null) {
-    return control?.invalid && (control?.dirty || control?.touched) && control?.errors;
+    return (
+      control?.invalid &&
+      (control?.dirty || control?.touched) &&
+      control?.errors
+    );
   }
 
   registerForm() {
@@ -60,12 +68,19 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm() {
-    this.serverError = '';
+    this.serverError = "";
     _.forEach(this.form.controls, (control: AbstractControl) => {
       control.markAsTouched();
     });
 
     if (!this.form.invalid) {
+      // Check for multiple logins
+      if (this._loginManager.isAuthenticated()) {
+        alert("User already logged in!");
+        this.navigateToPage();
+        return;
+      }
+
       this.submitting = true;
       this.submit(this.getPostData() as any)
         .pipe(
@@ -86,8 +101,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmitSuccess(response: User) {
-      if (response) this.navigateToPage();
-      else this.serverError = 'Username or password error';
+    if (response) this.navigateToPage();
+    else this.serverError = "Username or password error";
   }
 
   onSubmitError(error: any) {
@@ -95,7 +110,7 @@ export class LoginComponent implements OnInit {
   }
 
   reset() {
-    this.serverError = '';
+    this.serverError = "";
     this.form.reset(this.initialValues);
   }
 

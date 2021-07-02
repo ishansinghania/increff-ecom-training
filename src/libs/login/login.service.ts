@@ -33,6 +33,15 @@ export class LoginManager {
     this._storageService.saveLocal(USER_KEY, user);
   }
 
+  checkSession() {
+    if (!this.isAuthenticated()) {
+      alert("User not logged in");
+      this.redirectToLogin();
+      return false;
+    }
+    return true;
+  }
+
   redirectToLogin() {
     this._router.navigateByUrl("/login");
   }
