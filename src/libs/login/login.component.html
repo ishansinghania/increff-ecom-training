@@ -30,6 +30,7 @@
             class="form-control"
             name="password"
             id="password"
+            placeholder="Password"
             required
             formControlName="password"
             [ngClass]="{'input-error': isControlValid(password)}"
@@ -48,7 +49,7 @@
           (click)="submitForm()"
           class="btn btn-outline-primary mx-auto d-block mt-4"
         >
-          Submit
+          Sign In
         </button>
       </form>
     </div>

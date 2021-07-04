@@ -1,19 +1,26 @@
-:host:hover {
-  transform: scale(1.01);
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15) !important;
-}
 .product-detail {
   .cart-section {
-    display: none;
+    padding: 0.75rem 0.25rem;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: -2.25rem;
+    right: 0;
   }
 
-  &:hover .cart-section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: absolute;
-    top: -3.25rem;
-    right: 0;
+  &:hover {
+    .cart-section {
+      visibility: visible;
+      opacity: 1;
+      top: -3rem;
+      right: 0;
+      transition: all 0.25s ease-in;
+    }
+
+    img {
+      opacity: 0.85;
+      transition: opacity 0.3s ease-in;
+    }
   }
 }
 
