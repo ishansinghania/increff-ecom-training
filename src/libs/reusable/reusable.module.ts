@@ -6,9 +6,10 @@ import { RouterModule } from "@angular/router";
 
 import { StorageService } from "./storage-service.component";
 import { ApiService } from "./api-service.component";
+import { ToastService } from "./toast-service.component";
 
 @NgModule({
   imports: [CommonModule, HttpClientModule, RouterModule],
-  providers: [StorageService, ApiService],
+  providers: [StorageService, ApiService, ToastService],
 })
 export class ReusableModule {}

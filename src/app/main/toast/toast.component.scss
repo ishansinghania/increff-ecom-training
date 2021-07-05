@@ -1,16 +1,12 @@
-.toast-container {
+.toast {
   position: fixed;
   top: 1.25rem;
   right: 0;
   z-index: 11000;
   width: 100%;
-}
-
-.toast {
-  border-bottom: 0;
-  border-top: 0;
+  border: 0;
+  border-left: 5px solid black;
   border-radius: 0.25rem 0 0 0.2rem;
-  border-left: 5px solid;
 }
 
 .toast-body {
@@ -18,7 +14,7 @@
 }
 
 .success {
-  border-left: 5px solid #1c7330;
+  border-color: #1c7330;
   background-color: #1c7330d9;
 
   &.toast-header {
@@ -26,8 +22,8 @@
   }
 }
 
-.danger {
-  border-left: 5px solid #ef8664;
+.error {
+  border-color: #ef8664;
   background-color: #ef8664d9;
 
   .toast-header {

@@ -1,0 +1,11 @@
+<div class="toast m-2 ml-auto" [ngClass]="getClass()" *ngIf="toastData">
+  <div class="toast-header border-bottom">
+    <strong class="mr-auto">{{toastData?.header}}</strong>
+    <button type="button" class="ml-2 close" (click)="dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="toast-body">
+    {{toastData?.message}}
+  </div>
+</div>

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 
 import { LoginManager } from "@libs/login";
-import { StorageService } from "@libs/reusable";
+import { StorageService, ToastService } from "@libs/reusable";
 import { Product, CART_KEY } from "../../model";
 
 @Injectable()
@@ -11,7 +11,8 @@ export class CartService {
 
   constructor(
     private _storageService: StorageService,
-    private _loginService: LoginManager
+    private _loginService: LoginManager,
+    private _toastService: ToastService,
   ) {}
 
   getQuantitySubscription(): Observable<number> {
@@ -53,7 +54,8 @@ export class CartService {
       if(!this._loginService.checkSession()) return;
 
     if (quantity < 1) {
-      window.alert("Quantity should be atleast one!");
+        this._toastService.error("Quantity should be atleast one!");
+    //   window.alert("Quantity should be atleast one!");
       return;
     }
 
@@ -65,7 +67,9 @@ export class CartService {
 
         this.setCartItems(cartItems);
         this.updateQuantity();
-        window.alert("Product added successfully");
+        this._toastService.success("Product added successfully!");
+        
+        // window.alert("Product added successfully");
         return;
       }
     }
@@ -77,7 +81,9 @@ export class CartService {
 
     this.setCartItems(cartItems);
     this.updateQuantity();
-    window.alert("Product added successfully");
+    this._toastService.success("Product added successfully!");
+
+    // window.alert("Product added successfully");
   }
 
   removeCartItem(productId: number) {
@@ -89,7 +95,8 @@ export class CartService {
       this.setCartItems(cartItems);
       this.updateQuantity();
 
-      window.alert('Product deleted successfully!');
+      this._toastService.success("Product deleted successfully!");
+    //   window.alert('Product deleted successfully!');
       return true;
   }
 }
