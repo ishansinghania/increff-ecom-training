@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { tap, takeWhile, finalize } from "rxjs/operators";
 
 import { Product } from "../../../model";
-import { ApiService } from "@libs/reusable";
+import { ApiService, ToastService } from "@libs/reusable";
 import { CartService } from "@libs/miscellaneous";
 
 @Component({
@@ -22,7 +22,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     private _apiService: ApiService,
     private _route: ActivatedRoute,
     private _router: Router,
-    private _cartService: CartService
+    private _cartService: CartService,
+    private _toastService: ToastService
   ) {}
 
   addToCart() {
@@ -34,7 +35,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.productId = +this._route.snapshot.params?.id;
 
     if (!this.productId) {
-      window.alert("Enter a valid product id. Redirecting to list!");
+      this._toastService.success(
+        "Enter a valid product id. Redirecting to list!"
+      );
       this._router.navigateByUrl("/");
       return;
     }

@@ -1,6 +1,6 @@
 <div class="container">
-  <div class="row" *ngIf="product && isProductFetched">
-    <div class="col-12 col-lg-6">
+  <div class="row justify-content-center bg-white" *ngIf="product && isProductFetched">
+    <div class="col-10 col-md-8 col-lg-6 my-3">
       <div
         class="carousel slide"
         id="caraouselControl"
@@ -13,7 +13,7 @@
             [ngClass]="{'active': first}"
             *ngFor="let image of product.images; let first = first"
           >
-            <img class="d-block w-100" alt="Image slide" src="{{image}}" />
+            <img class="d-block w-100 rounded" alt="Image slide" src="{{image}}" />
           </div>
         </div>
         <a

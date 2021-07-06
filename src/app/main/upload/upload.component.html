@@ -14,15 +14,33 @@
       />
     </div>
     <div class="col-12 overflow-auto" *ngIf="products?.length">
-      <table class="table table-striped table-hover table-bordered">
+      <table class="table table-striped table-hover table-bordered bg-white">
         <thead class="bg-dark text-white text-capitalize">
           <tr>
-            <td *ngFor="let field of fields">{{field}}</td>
+            <td>ID</td>
+            <td>Brand Name</td>
+            <td>Name</td>
+            <td>Client SKU</td>
+            <td>Size</td>
+            <td>Quantity</td>
+            <td>MRP</td>
+            <td>Sub-total</td>
+            <td>GST</td>
+            <td>Total</td>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let product of products">
-            <td *ngFor="let entry of product | keyvalue">{{entry.value}}</td>
+            <td>{{product?.id}}</td>
+            <td>{{product?.brandName}}</td>
+            <td>{{product?.name}}</td>
+            <td>{{product?.clientSkuId}}</td>
+            <td>{{product?.size}}</td>
+            <td>{{product?.quantity}}</td>
+            <td>{{product?.mrp}}</td>
+            <td>{{product?.subtotal}}</td>
+            <td>{{product?.gst}}</td>
+            <td>{{product?.total}}</td>
           </tr>
         </tbody>
       </table>

@@ -55,7 +55,6 @@ export class CartService {
 
     if (quantity < 1) {
         this._toastService.error("Quantity should be atleast one!");
-    //   window.alert("Quantity should be atleast one!");
       return;
     }
 
@@ -69,7 +68,6 @@ export class CartService {
         this.updateQuantity();
         this._toastService.success("Product added successfully!");
         
-        // window.alert("Product added successfully");
         return;
       }
     }
@@ -82,8 +80,6 @@ export class CartService {
     this.setCartItems(cartItems);
     this.updateQuantity();
     this._toastService.success("Product added successfully!");
-
-    // window.alert("Product added successfully");
   }
 
   removeCartItem(productId: number) {
@@ -96,7 +92,6 @@ export class CartService {
       this.updateQuantity();
 
       this._toastService.success("Product deleted successfully!");
-    //   window.alert('Product deleted successfully!');
       return true;
   }
 }

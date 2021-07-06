@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import './loader.scss';
+@import "./loader.scss";
 
 html {
   min-height: 100%;
@@ -7,23 +7,27 @@ html {
   position: relative;
 }
 
+body {
+  background-color: #f0f2f5;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
 
 hr {
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 p {
-    color: #343a40;
+  color: #343a40;
 }
 
 .dropdown-menu.show {
-    left: -8rem;
+  left: -8rem;
 }
 
 .fas.dropdown-toggle::after {
-    display: none;
+  display: none;
 }

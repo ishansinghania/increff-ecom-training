@@ -4,7 +4,7 @@
       <h4 class="font-weight-bold m-2">Orders</h4>
       <div class="border rounded shadow-sm" *ngIf="productList.length">
         <div
-          class="row m-0 p-2 border-bottom product"
+          class="row m-0 p-2 border-bottom product bg-white"
           *ngFor="let product of productList"
         >
           <img
@@ -55,7 +55,7 @@
     </div>
     <div class="col-12 col-lg-5" *ngIf="productList?.length">
       <h4 class="font-weight-bold m-2">Payments</h4>
-      <div class="border shadow-sm rounded p-2">
+      <div class="border shadow-sm rounded p-2 bg-white">
         <h6 class="font-weight-bold mt-2">
           Total Items (<span>{{productList?.length}}</span>)
         </h6>

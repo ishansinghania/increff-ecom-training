@@ -3,7 +3,7 @@ import * as Papa from "papaparse";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { finalize, takeWhile, tap } from "rxjs/operators";
 
-import { ApiService } from "@libs/reusable";
+import { ApiService, ToastService } from "@libs/reusable";
 import { CartService } from "@libs/miscellaneous";
 import { LoginManager } from "@libs/login";
 import { Product } from "../../../model";
@@ -46,6 +46,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private _apiService: ApiService,
     private _cartService: CartService,
     private _loginService: LoginManager,
+    private _toastService: ToastService
   ) {}
 
   getQuantity(productId: number) {
@@ -101,7 +102,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   downloadOrder() {
-    if(!this._loginService.checkSession()) return;
+    if (!this._loginService.checkSession()) return;
     const fields = ["id", "brandName", "name", "clientSkuId", "size", "mrp"];
 
     const products = this.productList
@@ -114,14 +115,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         const item = this.cartItems.find((item) => (item.id = product.id));
         temp["quantity"] = item?.quantity;
         temp["subtotal"] = temp?.quantity * product?.mrp;
-        temp["gst"] = (temp?.subtotal * 0.14).toFixed(2);
+        temp["gst"] = Number((temp?.subtotal * 0.14).toFixed(2));
         temp["total"] = temp?.subtotal + temp?.gst;
 
         return temp;
       })
       .sort((a, b) => a.id - b.id);
 
-    const csv = Papa.unparse(products);
+    const csv = Papa.unparse(products, {
+      skipEmptyLines: true,
+    });
 
     // converting to a blob file
 
@@ -139,7 +142,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     tempLink.setAttribute("download", "order.csv");
     tempLink.click();
 
-    window.alert("Order placed successfully");
+    this._toastService.success("Order placed successfully!");
   }
 
   ngOnInit() {
