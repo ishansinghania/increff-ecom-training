@@ -1,14 +1,14 @@
 <div class="container" *ngIf="isProductsFetched">
   <div class="row">
-    <div class="col-12 col-lg-7">
+    <div class="col-12 col-lg-7 mb-3 mb-lg-0">
       <h4 class="font-weight-bold m-2">Orders</h4>
       <div class="border rounded shadow-sm" *ngIf="productList.length">
         <div
           class="row m-0 p-2 border-bottom product bg-white"
-          *ngFor="let product of productList"
+          *ngFor="let product of productList; let index = index"
         >
           <img
-            class="img-fluid rounded img-thumbnail border-0 checkout-image"
+            class="img-fluid img-thumbnail p-0 border-white checkout-image"
             [src]="product.image"
             width="100px"
             alt="Image not Available"
@@ -35,10 +35,19 @@
                 <i class="fas fa-rupee-sign fa-xs pr-1"></i>
                 <span class="product-mrp">{{product.mrp}}</span>
               </div>
-              <div>
-                <span class="text-secondary">Quantity:</span>&nbsp;
-                <span class="product-quantity"
+              <div class="d-flex align-items-center justify-content-center">
+                <span
+                  class="circle cursor-pointer d-flex align-items-center justify-content-center mr-2 border"
+                  (click)="updateQuantity(-1, index)"
+                  >-</span
+                >
+                <span class="product-quantity px-4 py-1 border rounded"
                   >{{ getQuantity(product.id) }}</span
+                >
+                <span
+                  class="circle cursor-pointer d-flex align-items-center justify-content-center ml-2 border"
+                  (click)="updateQuantity(1, index)"
+                  >+</span
                 >
               </div>
             </div>
@@ -53,7 +62,7 @@
         Add more products to place an order
       </h5>
     </div>
-    <div class="col-12 col-lg-5" *ngIf="productList?.length">
+    <div class="col-12 col-lg-5 mb-3 mb-lg-0" *ngIf="productList?.length">
       <h4 class="font-weight-bold m-2">Payments</h4>
       <div class="border shadow-sm rounded p-2 bg-white">
         <h6 class="font-weight-bold mt-2">

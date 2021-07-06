@@ -12,7 +12,7 @@ export class CartService {
   constructor(
     private _storageService: StorageService,
     private _loginService: LoginManager,
-    private _toastService: ToastService,
+    private _toastService: ToastService
   ) {}
 
   getQuantitySubscription(): Observable<number> {
@@ -32,8 +32,23 @@ export class CartService {
     this.quantity.next(this.getQuantity());
   }
 
+  updateCartItemQuantity(productId: number, quantity: number) {
+    if (!this._loginService.checkSession()) return;
+
+    const cartItems = this.getCartItems();
+    const index = cartItems.findIndex((item) => item.id === productId);
+
+    if (index !== -1) {
+      cartItems[index].quantity += quantity;
+
+      this.setCartItems(cartItems);
+      this.updateQuantity();
+      this._toastService.success("Product updated successfully!");
+    } else this._toastService.error("Product not found"!);
+  }
+
   getLoggedInUserCartMap() {
-      return this._storageService.getLocal(CART_KEY) ?? {};
+    return this._storageService.getLocal(CART_KEY) ?? {};
   }
 
   getCartItems(): Product[] {
@@ -51,10 +66,10 @@ export class CartService {
   }
 
   addToCart(id: number, quantity: number) {
-      if(!this._loginService.checkSession()) return;
+    if (!this._loginService.checkSession()) return;
 
     if (quantity < 1) {
-        this._toastService.error("Quantity should be atleast one!");
+      this._toastService.error("Quantity should be atleast one!");
       return;
     }
 
@@ -67,7 +82,7 @@ export class CartService {
         this.setCartItems(cartItems);
         this.updateQuantity();
         this._toastService.success("Product added successfully!");
-        
+
         return;
       }
     }
@@ -83,15 +98,15 @@ export class CartService {
   }
 
   removeCartItem(productId: number) {
-    if(!this._loginService.checkSession()) return;
+    if (!this._loginService.checkSession()) return;
 
-      let cartItems = this.getCartItems();
-      cartItems = cartItems.filter((item) => item.id !== productId);
+    let cartItems = this.getCartItems();
+    cartItems = cartItems.filter((item) => item.id !== productId);
 
-      this.setCartItems(cartItems);
-      this.updateQuantity();
+    this.setCartItems(cartItems);
+    this.updateQuantity();
 
-      this._toastService.success("Product deleted successfully!");
-      return true;
+    this._toastService.success("Product deleted successfully!");
+    return true;
   }
 }

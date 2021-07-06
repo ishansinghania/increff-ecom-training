@@ -8,6 +8,11 @@ import { CartService } from "@libs/miscellaneous";
 import { LoginManager } from "@libs/login";
 import { Product } from "../../../model";
 
+interface CartItem {
+  id: number;
+  quantity: number;
+}
+
 @Component({
   selector: "checkout",
   templateUrl: "./checkout.component.html",
@@ -22,6 +27,13 @@ import { Product } from "../../../model";
       .fa-trash-alt:hover {
         color: #dc3545 !important;
       }
+      .circle {
+        border-radius: 50% !important;
+        height: 22px;
+        width: 22px;
+        background-color: #ebeff4;
+        box-shadow: 0 0.1rem 0.1rem rgb(0 0 0 / 10%);
+      }
     `,
   ],
 })
@@ -29,10 +41,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   private _alive: boolean = true;
 
   productList: Product[] = [];
-  cartItems: {
-    id: number;
-    quantity: number;
-  }[] = [];
+  cartItems: CartItem[] = [];
 
   paymentInfo: {
     subtotal: number;
@@ -49,16 +58,37 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private _toastService: ToastService
   ) {}
 
+  getCartItem(productId: number) {
+    return this.cartItems.find((item) => item.id === productId);
+  }
+
   getQuantity(productId: number) {
-    const item = this.cartItems.find((item) => item.id === productId);
+    const item = this.getCartItem(productId);
     return item ? item?.quantity : 0;
+  }
+
+  updateQuantity(quantity: number, index: number) {
+    const product = this.productList[index];
+    let item = this.getCartItem(product.id) as CartItem;
+    item.quantity += quantity;
+
+    if (item.quantity <= 0) {
+      this.deleteProduct(product.id);
+      return;
+    }
+
+    this.paymentInfo.subtotal += product.mrp * quantity;
+    this.calculatePayment();
+    this._cartService.updateCartItemQuantity(product.id, quantity);
   }
 
   calculatePayment() {
     this.paymentInfo.gst = Number(
       (this.paymentInfo.subtotal * 0.14).toFixed(2)
     );
-    this.paymentInfo.total = this.paymentInfo.gst + this.paymentInfo.subtotal;
+    this.paymentInfo.total = Number(
+      (this.paymentInfo.gst + this.paymentInfo.subtotal).toFixed(2)
+    );
   }
 
   initializeCart() {
@@ -112,9 +142,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           temp[field] = product[field];
         });
 
-        const item = this.cartItems.find((item) => (item.id = product.id));
+        const item = this.getCartItem(product.id) as CartItem;
         temp["quantity"] = item?.quantity;
-        temp["subtotal"] = temp?.quantity * product?.mrp;
+        temp["subtotal"] = item?.quantity * product?.mrp;
         temp["gst"] = Number((temp?.subtotal * 0.14).toFixed(2));
         temp["total"] = temp?.subtotal + temp?.gst;
 
@@ -127,7 +157,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
 
     // converting to a blob file
-
     const csvData = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     let csvURL = null;
     if (navigator.msSaveBlob) {
