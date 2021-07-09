@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private _router: Router,
     private _loginManager: LoginManager,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
   ) {}
 
   get email() {
@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
     if (!this.form.invalid) {
       // Check for multiple logins
       if (this._loginManager.isAuthenticated()) {
-        alert("User already logged in!");
+        //   this._toastService.error("User already logged in!");
         this.navigateToPage();
         return;
       }

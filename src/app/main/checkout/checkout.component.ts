@@ -146,7 +146,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         temp["quantity"] = item?.quantity;
         temp["subtotal"] = item?.quantity * product?.mrp;
         temp["gst"] = Number((temp?.subtotal * 0.14).toFixed(2));
-        temp["total"] = temp?.subtotal + temp?.gst;
+        temp["total"] = Number((temp?.subtotal + temp?.gst).toFixed(2));
 
         return temp;
       })

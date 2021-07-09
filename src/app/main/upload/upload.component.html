@@ -13,37 +13,50 @@
         (change)="handleFileInput($event)"
       />
     </div>
-    <div class="col-12 overflow-auto" *ngIf="products?.length">
-      <table class="table table-striped table-hover table-bordered bg-white">
-        <thead class="bg-dark text-white text-capitalize">
-          <tr>
-            <td>ID</td>
-            <td>Brand Name</td>
-            <td>Name</td>
-            <td>Client SKU</td>
-            <td>Size</td>
-            <td>Quantity</td>
-            <td>MRP</td>
-            <td>Sub-total</td>
-            <td>GST</td>
-            <td>Total</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let product of products">
-            <td>{{product?.id}}</td>
-            <td>{{product?.brandName}}</td>
-            <td>{{product?.name}}</td>
-            <td>{{product?.clientSkuId}}</td>
-            <td>{{product?.size}}</td>
-            <td>{{product?.quantity}}</td>
-            <td>{{product?.mrp}}</td>
-            <td>{{product?.subtotal}}</td>
-            <td>{{product?.gst}}</td>
-            <td>{{product?.total}}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="col-12">
+      <div
+        class="px-3 py-1 bg-white my-4 d-flex flex-column"
+        *ngIf="errors?.length"
+      >
+        <span class="pt-1 text-danger" *ngFor="let error of errors"
+          >{{error}}</span
+        >
+      </div>
+      <div class="overflow">
+        <table
+          class="table table-hover table-bordered bg-white"
+          *ngIf="products?.length"
+        >
+          <thead class="bg-dark text-white text-capitalize">
+            <tr>
+              <th>ID</th>
+              <th>Brand Name</th>
+              <th>Name</th>
+              <th>Client SKU</th>
+              <th>Size</th>
+              <th>Quantity</th>
+              <th>MRP</th>
+              <th>Sub-total</th>
+              <th>GST</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of products">
+              <td>{{product?.id}}</td>
+              <td>{{product?.brandName}}</td>
+              <td>{{product?.name}}</td>
+              <td>{{product?.clientSkuId}}</td>
+              <td>{{product?.size}}</td>
+              <td>{{product?.quantity}}</td>
+              <td>{{product?.mrp}}</td>
+              <td>{{product?.subtotal}}</td>
+              <td>{{product?.gst}}</td>
+              <td>{{product?.total}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

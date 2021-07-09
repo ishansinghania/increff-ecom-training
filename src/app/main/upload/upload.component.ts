@@ -1,9 +1,11 @@
 import * as Papa from "papaparse";
 import { Component, ElementRef, ViewChild } from "@angular/core";
-import { ApiService, ToastService } from "@libs/reusable";
+import { ApiService } from "@libs/reusable";
 import { LoginManager } from "@libs/login";
 
-const Upload = {
+const Upload: {
+  [key: string]: string | number;
+} = {
   id: 0,
   brandName: "",
   name: "",
@@ -19,18 +21,45 @@ const Upload = {
 @Component({
   selector: "order-upload",
   templateUrl: "./upload.component.html",
+  styles: [
+    `
+      @media (min-width: 992px) {
+        th {
+          position: sticky;
+          top: 3.7rem;
+          z-index: 99999;
+          background-color: #343a40;
+          color: #fff;
+          text-transform: capitalize;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .overflow {
+          overflow: auto;
+        }
+      }
+    `,
+  ],
 })
 export class UploadComponent {
   products: typeof Upload[];
+  errors: string[];
   fields = Object.keys(Upload);
 
   @ViewChild("fileUpload") fileUpload: ElementRef;
 
   constructor(
     private _apiService: ApiService,
-    private _loginService: LoginManager,
-    private _toastService: ToastService
+    private _loginService: LoginManager
   ) {}
+
+  stopParsing() {
+    // Resetting the file input
+
+    this.fileUpload.nativeElement.value = null;
+    this._apiService.hideLoader();
+  }
 
   handleFileInput(event: any) {
     if (!this._loginService.checkSession()) return;
@@ -38,8 +67,8 @@ export class UploadComponent {
 
     if (file) {
       this._apiService.showLoader();
-
       this.products = [];
+      this.errors = [];
 
       Papa.parse(file, {
         dynamicTyping: true,
@@ -47,49 +76,67 @@ export class UploadComponent {
         header: true,
         complete: (results, file) => {
           const uploadData = results.data as typeof Upload[];
-          uploadData.every((entry, index) => {
-            return this.sanitizeRow(entry, index);
+
+          // Checking for extra columns in the uploaded file
+          let hasAllKeys = true;
+          results.meta.fields?.forEach((field) => {
+            if (!Upload.hasOwnProperty(field)) {
+              this.errors.push(`Extra column ${field} in the table`);
+              hasAllKeys = false;
+            }
           });
 
-          // Resetting the file input
-          this.fileUpload.nativeElement.value = null;
+          // If extra columns are found, stop the parsing and show the errors
+          if (!hasAllKeys) {
+            this.stopParsing();
+            return;
+          }
 
-          this._apiService.hideLoader();
+          uploadData.forEach((entry, index) => this.sanitizeRow(entry, index));
+          this.stopParsing();
         },
-        error: (err) => {
-          this._apiService.hideLoader();
-        },
+        error: () => this.stopParsing(),
       });
     }
   }
 
-  sanitizeRow(row: typeof Upload, index: number): boolean {
-    if (this.fields.length !== Object.keys(row).length) {
-      this._toastService.error(`Some columns missing`);
-      return false;
-    } else if (!row.id || row.id < 0) {
-      this._toastService.error(
-        `ID should be greater than 0 at row index ${index + 1}`
-      );
-      return false;
-    } else if (!row.quantity) {
-      this._toastService.error(
+  sanitizeRow(row: typeof Upload, index: number) {
+    let hasError = false;
+
+    // Checking for negative id field
+    if (!row.id || row.id <= 0) {
+      hasError = true;
+      this.errors.push(`ID should be greater than 0 at row index ${index + 1}`);
+    }
+
+    // Checking for negative quantity field
+    if (!row.quantity || row.quantity <= 0) {
+      hasError = true;
+      this.errors.push(
         `Quantity should be atleast 1 at row index ${index + 1}`
       );
-      return false;
-    } else {
-      const rowValues: any = {};
-      for (const [key, value] of Object.entries(row)) {
-        if (value === null || value === void 0) {
-          this._toastService.error(
-            `Some columns values missing at row index ${index + 1}`
-          );
-          return false;
-        }
-        rowValues[key] = value;
-      }
-      this.products.push(rowValues);
-      return true;
     }
+    const rowValues: any = {};
+    for (const [key, value] of Object.entries(row)) {
+      // Checking for empty fields
+      if (value === null || value === void 0) {
+        hasError = true;
+        this.errors.push(`${key} value missing at row index ${index + 1}`);
+      }
+
+      // Type checking each field and value. Ex, if string is provided in number field.
+      if (typeof value !== typeof Upload[key]) {
+        hasError = true;
+        this.errors.push(
+          `Expected ${typeof Upload[
+            key
+          ]} for ${key} but got ${typeof value} at row index ${index + 1}`
+        );
+      }
+      rowValues[key] = value;
+    }
+
+    // Displaying only those rows which do not contain any error
+    if (!hasError) this.products.push(rowValues);
   }
 }

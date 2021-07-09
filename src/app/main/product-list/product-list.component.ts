@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { takeUntil, takeWhile } from "rxjs/operators";
+import { takeWhile } from "rxjs/operators";
 
 import { ApiService } from "@libs/reusable/api-service.component";
 import { Product } from "../../../model";

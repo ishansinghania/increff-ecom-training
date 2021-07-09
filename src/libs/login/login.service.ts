@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 
 import { User, USER_KEY } from "../../model";
-import { ApiService, StorageService } from "@libs/reusable";
+import { ApiService, StorageService, ToastService } from "@libs/reusable";
 
 @Injectable()
 export class LoginManager {
@@ -14,7 +14,8 @@ export class LoginManager {
   constructor(
     private _apiService: ApiService,
     private _storageService: StorageService,
-    private _router: Router
+    private _router: Router,
+    // private _toastService: ToastService,
   ) {}
 
   get userName() {
@@ -35,7 +36,7 @@ export class LoginManager {
 
   checkSession() {
     if (!this.isAuthenticated()) {
-      alert("User not logged in");
+    //   this._toastService.error("User not logged in!");
       this.redirectToLogin();
       return false;
     }
