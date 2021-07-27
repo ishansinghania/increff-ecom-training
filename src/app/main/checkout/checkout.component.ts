@@ -145,6 +145,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         temp[field] = product[field];
       });
 
+      // Payment calculation
       const item = this.getCartItem(product.id) as CartItem;
       if (item && item.quantity > 0) {
         temp["quantity"] = item?.quantity;

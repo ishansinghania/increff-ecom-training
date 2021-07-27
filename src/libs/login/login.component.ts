@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  // Initial form registeration
   registerForm() {
     this.form = this._formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
@@ -60,6 +61,7 @@ export class LoginComponent implements OnInit {
       this._router.navigateByUrl(this._loginManager.redirectUrl || "/");
   }
 
+  // Returning only those fields which have a value
   getPostData(): object {
     const data: { [key: string]: any } = {};
     _.forEach(this.form.value, (value: any, key: string) => {

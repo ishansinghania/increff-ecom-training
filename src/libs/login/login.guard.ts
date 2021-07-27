@@ -8,6 +8,7 @@ import {
 
 import { LoginManager } from "./login.service";
 
+  // Routing to home page if someone forcefully tries to navigate to the login page
 @Injectable()
 export class LoginGuard implements CanActivate {
   constructor(private _loginManager: LoginManager, private _router: Router) {}

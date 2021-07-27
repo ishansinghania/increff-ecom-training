@@ -6,6 +6,7 @@ import { catchError, map } from "rxjs/operators";
 import { User, USER_KEY } from "../../model";
 import { ApiService, StorageService, ToastService } from "@libs/reusable";
 
+// Contains all the login related methods
 @Injectable()
 export class LoginManager {
   private _user: User;

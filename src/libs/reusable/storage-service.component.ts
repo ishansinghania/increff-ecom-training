@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 
+// Single service to access the local storage
 @Injectable()
 export class StorageService {
   saveLocal(key: string, value: any) {
