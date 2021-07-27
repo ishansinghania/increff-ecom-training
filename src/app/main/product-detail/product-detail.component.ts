@@ -35,8 +35,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.productId = +this._route.snapshot.params?.id;
 
     if (!this.productId) {
-      this._toastService.success(
-        "Enter a valid product id. Redirecting to list!"
+      this._toastService.error(
+        "Product not found. Redirecting to list!"
       );
       this._router.navigateByUrl("/");
       return;
