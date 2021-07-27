@@ -21,11 +21,12 @@ export class CartService {
 
   getQuantity(): number {
     const cartItemMap = this.getCartItems();
-    const totalQuantity = cartItemMap.reduce(
-      (accr: number, curr: Product) => (accr += curr.quantity),
-      0
-    );
-    return totalQuantity;
+    const totalQuantity = cartItemMap.reduce((accr: number, curr: Product) => {
+      if (curr?.quantity > 0) accr += curr.quantity;
+      return accr;
+    }, 0);
+
+    return totalQuantity || 0;
   }
 
   updateQuantity() {

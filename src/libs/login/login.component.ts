@@ -11,6 +11,7 @@ import {
 import { Observable } from "rxjs";
 import { finalize } from "rxjs/operators";
 
+import { ToastService } from "@libs/reusable";
 import { User } from "../../model";
 import { LoginManager } from "./login.service";
 
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
     private _router: Router,
     private _loginManager: LoginManager,
     private _formBuilder: FormBuilder,
+    private _toastService: ToastService
   ) {}
 
   get email() {
@@ -76,7 +78,7 @@ export class LoginComponent implements OnInit {
     if (!this.form.invalid) {
       // Check for multiple logins
       if (this._loginManager.isAuthenticated()) {
-        //   this._toastService.error("User already logged in!");
+          this._toastService.error("User already logged in!");
         this.navigateToPage();
         return;
       }
@@ -101,7 +103,10 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmitSuccess(response: User) {
-    if (response) this.navigateToPage();
+    if (response) {
+        this._toastService.success('User logged in successfully!');
+        this.navigateToPage();
+    }
     else this.serverError = "Username or password error";
   }
 

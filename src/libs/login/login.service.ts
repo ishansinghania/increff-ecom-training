@@ -15,7 +15,7 @@ export class LoginManager {
     private _apiService: ApiService,
     private _storageService: StorageService,
     private _router: Router,
-    // private _toastService: ToastService,
+    private _toastService: ToastService,
   ) {}
 
   get userName() {
@@ -24,7 +24,6 @@ export class LoginManager {
 
   get user(): User {
     // Will fetch the user from the local storage for the first time otherwise will return the in memory stored user.
-    // if (!this._user) {}
     this._user = this._storageService.getLocal(USER_KEY);
     return this._user;
   }
@@ -36,7 +35,7 @@ export class LoginManager {
 
   checkSession() {
     if (!this.isAuthenticated()) {
-    //   this._toastService.error("User not logged in!");
+      this._toastService.error("User not logged in!");
       this.redirectToLogin();
       return false;
     }
@@ -49,7 +48,7 @@ export class LoginManager {
 
   isAuthenticated() {
     const loggedInUser = this.user;
-    return loggedInUser && loggedInUser.id;
+    return !!(loggedInUser && loggedInUser?.id);
   }
 
   resetUser() {
@@ -77,6 +76,7 @@ export class LoginManager {
   logout() {
     this._storageService.clearLocal(USER_KEY);
     this.resetUser();
+    this._toastService.success('User logged out successfully!');
     this.redirectToLogin();
   }
 }

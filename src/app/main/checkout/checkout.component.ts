@@ -50,6 +50,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   };
 
   isProductsFetched: boolean = false;
+  totalCount = 0;
 
   constructor(
     private _apiService: ApiService,
@@ -93,6 +94,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   initializeCart() {
     this.isProductsFetched = false;
+    this.totalCount = 0;
     this.paymentInfo = {
       subtotal: 0,
       gst: 0,
@@ -112,9 +114,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
               const product = products.find(
                 (product) => product.id === item.id
               ) as Product;
-              if (product?.id && item?.quantity) {
+              if (product?.id > 0 && item?.quantity > 0) {
                 this.paymentInfo.subtotal += product.mrp * item.quantity;
                 this.productList.push(product);
+                ++this.totalCount;
               }
             }
 
@@ -134,23 +137,24 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   downloadOrder() {
     if (!this._loginService.checkSession()) return;
     const fields = ["id", "brandName", "name", "clientSkuId", "size", "mrp"];
+    let products: { [key: string]: any }[] = [];
 
-    const products = this.productList
-      .map((product: any) => {
-        const temp: { [key: string]: any } = {};
-        fields.forEach((field) => {
-          temp[field] = product[field];
-        });
+    this.productList.forEach((product: any) => {
+      const temp: { [key: string]: any } = {};
+      fields.forEach((field) => {
+        temp[field] = product[field];
+      });
 
-        const item = this.getCartItem(product.id) as CartItem;
+      const item = this.getCartItem(product.id) as CartItem;
+      if (item && item.quantity > 0) {
         temp["quantity"] = item?.quantity;
         temp["subtotal"] = item?.quantity * product?.mrp;
         temp["gst"] = Number((temp?.subtotal * 0.14).toFixed(2));
         temp["total"] = Number((temp?.subtotal + temp?.gst).toFixed(2));
-
-        return temp;
-      })
-      .sort((a, b) => a.id - b.id);
+        products.push(temp);
+      }
+    });
+    products = products.sort((a, b) => a.id - b.id);
 
     const csv = Papa.unparse(products, {
       skipEmptyLines: true,

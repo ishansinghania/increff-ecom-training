@@ -31,3 +31,37 @@ p {
 .fas.dropdown-toggle::after {
   display: none;
 }
+
+/* Toast */
+.toast {
+  position: fixed;
+  top: 1.25rem;
+  right: 0;
+  z-index: 11000;
+  width: 100%;
+  border: 0;
+  border-left: 5px solid black;
+  border-radius: 0.25rem 0 0 0.2rem;
+}
+
+.toast-body {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.success {
+  border-color: #1c7330;
+  background-color: #1c7330d9;
+
+  .toast-header {
+    color: #1c7330;
+  }
+}
+
+.error {
+  border-color: #ef8664;
+  background-color: #ef8664d9;
+
+  .toast-header {
+    color: #ef8664;
+  }
+}

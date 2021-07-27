@@ -1,5 +1,5 @@
 import * as $ from "jquery";
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, OnChanges } from "@angular/core";
 import { Location } from "@angular/common";
 
 import { CartService } from "@libs/miscellaneous";
@@ -10,7 +10,7 @@ import { LoginManager } from "@libs/login";
   templateUrl: "./main.component.html",
   styleUrls: ["./main.component.scss"],
 })
-export class MainComponent implements OnInit, OnDestroy {
+export class MainComponent implements OnInit, OnChanges, OnDestroy {
   quantity: number;
   userName: string;
 
@@ -43,6 +43,10 @@ export class MainComponent implements OnInit, OnDestroy {
     this._loginService.logout();
   }
 
+  ngOnChanges() {
+    this._cartService.updateQuantity();
+  }
+
   ngOnInit() {
     const tooltip = jQuery('[data-toggle="tooltip"]') as any;
     tooltip.tooltip();
@@ -61,6 +65,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this._cartService
       .getQuantitySubscription()
       .subscribe((cartQuantity: number) => (this.quantity = cartQuantity));
+    this._cartService.updateQuantity();
   }
 
   ngOnDestroy() {

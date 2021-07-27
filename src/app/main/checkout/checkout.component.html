@@ -3,59 +3,61 @@
     <div class="col-12 col-lg-7 mb-3 mb-lg-0">
       <h4 class="font-weight-bold my-2">Orders</h4>
       <div class="border rounded shadow-sm" *ngIf="productList.length">
-        <div
-          class="row m-0 p-2 border-bottom product bg-white"
-          *ngFor="let product of productList; let index = index"
-        >
-          <img
-            class="img-fluid img-thumbnail p-0 border-white checkout-image"
-            [src]="product.image"
-            width="100px"
-            alt="Image not Available"
-          />
-          <div
-            class="col py-2 d-flex justify-content-between mr-auto flex-wrap position-relative"
-          >
-            <div>
-              <h5 class="font-weight-bold product-brand">
-                {{product.brandName}}
-              </h5>
-              <div class="text-secondary product-name">{{product.name}}</div>
-              <div>
-                <span class="text-secondary">Size:</span>&nbsp;
-                <span class="font-weight-bold product-size"
-                  >{{product.size}}</span
-                >
-              </div>
-            </div>
-            <div class="justify-items-end">
+        <div *ngFor="let product of productList; let index = index">
+            <div
+              class="row m-0 p-2 border-bottom product bg-white"
+              *ngIf="product.id > 0 && getQuantity(product.id) > 0"
+            >
+              <img
+                class="img-fluid img-thumbnail p-0 border-white checkout-image"
+                [src]="product.image"
+                width="100px"
+                alt="Image not Available"
+              />
               <div
-                class="d-flex align-items-center justify-content-sm-end font-weight-bold mb-2"
+                class="col py-2 d-flex justify-content-between mr-auto flex-wrap position-relative"
               >
-                <i class="fas fa-rupee-sign fa-xs pr-1"></i>
-                <span class="product-mrp">{{product.mrp}}</span>
-              </div>
-              <div class="d-flex align-items-center justify-content-center">
-                <span
-                  class="circle cursor-pointer d-flex align-items-center justify-content-center mr-2 border"
-                  (click)="updateQuantity(-1, index)"
-                  >-</span
-                >
-                <span class="product-quantity px-4 py-1 border rounded"
-                  >{{ getQuantity(product.id) }}</span
-                >
-                <span
-                  class="circle cursor-pointer d-flex align-items-center justify-content-center ml-2 border"
-                  (click)="updateQuantity(1, index)"
-                  >+</span
-                >
+                <div>
+                  <h5 class="font-weight-bold product-brand">
+                    {{product.brandName}}
+                  </h5>
+                  <div class="text-secondary product-name">{{product.name}}</div>
+                  <div>
+                    <span class="text-secondary">Size:</span>&nbsp;
+                    <span class="font-weight-bold product-size"
+                      >{{product.size}}</span
+                    >
+                  </div>
+                </div>
+                <div class="justify-items-end">
+                  <div
+                    class="d-flex align-items-center justify-content-sm-end font-weight-bold mb-2"
+                  >
+                    <i class="fas fa-rupee-sign fa-xs pr-1"></i>
+                    <span class="product-mrp">{{product.mrp}}</span>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-center">
+                    <span
+                      class="circle cursor-pointer d-flex align-items-center justify-content-center mr-2 border"
+                      (click)="updateQuantity(-1, index)"
+                      >-</span
+                    >
+                    <span class="product-quantity px-4 py-1 border rounded"
+                      >{{ getQuantity(product.id) }}</span
+                    >
+                    <span
+                      class="circle cursor-pointer d-flex align-items-center justify-content-center ml-2 border"
+                      (click)="updateQuantity(1, index)"
+                      >+</span
+                    >
+                  </div>
+                </div>
+                <i
+                  class="fas fa-trash-alt p-1 cursor-pointer"
+                  (click)="deleteProduct(product.id)"
+                ></i>
               </div>
             </div>
-            <i
-              class="fas fa-trash-alt p-1 cursor-pointer"
-              (click)="deleteProduct(product.id)"
-            ></i>
-          </div>
         </div>
       </div>
       <h5 class="m-2" *ngIf="!productList?.length">

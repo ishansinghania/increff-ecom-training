@@ -104,13 +104,13 @@ export class UploadComponent {
     let hasError = false;
 
     // Checking for negative id field
-    if (!row.id || row.id <= 0) {
+    if (!row?.id || row?.id <= 0) {
       hasError = true;
       this.errors.push(`ID should be greater than 0 at row index ${index + 1}`);
     }
 
     // Checking for negative quantity field
-    if (!row.quantity || row.quantity <= 0) {
+    if (!row?.quantity || row?.quantity <= 0) {
       hasError = true;
       this.errors.push(
         `Quantity should be atleast 1 at row index ${index + 1}`
